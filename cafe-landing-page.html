@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wooden Café - Farm to Table Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@300;400;600;700&display=swap');
+        
+        * {
+            scroll-behavior: smooth;
+        }
+        
+        .font-playfair {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .font-open {
+            font-family: 'Open Sans', sans-serif;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080"><defs><pattern id="wood" width="200" height="200" patternUnits="userSpaceOnUse"><rect width="200" height="200" fill="%23654321"/><rect x="0" y="0" width="200" height="2" fill="%23543210" opacity="0.3"/><rect x="0" y="20" width="200" height="1" fill="%23543210" opacity="0.2"/><rect x="0" y="40" width="200" height="2" fill="%23543210" opacity="0.3"/><rect x="0" y="60" width="200" height="1" fill="%23432109" opacity="0.2"/><rect x="0" y="80" width="200" height="3" fill="%23543210" opacity="0.3"/><rect x="0" y="100" width="200" height="1" fill="%23432109" opacity="0.2"/><rect x="0" y="120" width="200" height="2" fill="%23543210" opacity="0.3"/><rect x="0" y="140" width="200" height="1" fill="%23432109" opacity="0.2"/><rect x="0" y="160" width="200" height="2" fill="%23543210" opacity="0.3"/><rect x="0" y="180" width="200" height="1" fill="%23432109" opacity="0.2"/></pattern></defs><rect width="1920" height="1080" fill="url(%23wood)"/></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .wood-pattern {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><line x1="0" y1="50" x2="400" y2="50" stroke="%23D2691E10" stroke-width="1"/><line x1="0" y1="100" x2="400" y2="100" stroke="%23A0522D10" stroke-width="2"/><line x1="0" y1="150" x2="400" y2="150" stroke="%23D2691E10" stroke-width="1"/><line x1="0" y1="200" x2="400" y2="200" stroke="%238B451310" stroke-width="2"/><line x1="0" y1="250" x2="400" y2="250" stroke="%23D2691E10" stroke-width="1"/><line x1="0" y1="300" x2="400" y2="300" stroke="%23A0522D10" stroke-width="2"/><line x1="0" y1="350" x2="400" y2="350" stroke="%23D2691E10" stroke-width="1"/></svg>');
+            background-repeat: repeat;
+            background-size: 400px 400px;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+        
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .animate-fade-in {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        .menu-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .menu-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(139, 69, 19, 0.2);
+        }
+        
+        .nav-item {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: #D2691E;
+            transition: left 0.3s ease;
+        }
+        
+        .nav-item:hover::after {
+            left: 0;
+        }
+        
+        .pulse-dot {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Custom brown color classes */
+        .bg-wood-50 { background-color: #FAF5F0; }
+        .bg-wood-100 { background-color: #F5EBE0; }
+        .bg-wood-200 { background-color: #E8D5C4; }
+        .bg-wood-300 { background-color: #D2B48C; }
+        .bg-wood-400 { background-color: #C19A6B; }
+        .bg-wood-500 { background-color: #A0522D; }
+        .bg-wood-600 { background-color: #8B4513; }
+        .bg-wood-700 { background-color: #704214; }
+        .bg-wood-800 { background-color: #5D3A1A; }
+        .bg-wood-900 { background-color: #3E2723; }
+        
+        .text-wood-50 { color: #FAF5F0; }
+        .text-wood-100 { color: #F5EBE0; }
+        .text-wood-200 { color: #E8D5C4; }
+        .text-wood-300 { color: #D2B48C; }
+        .text-wood-400 { color: #C19A6B; }
+        .text-wood-500 { color: #A0522D; }
+        .text-wood-600 { color: #8B4513; }
+        .text-wood-700 { color: #704214; }
+        .text-wood-800 { color: #5D3A1A; }
+        .text-wood-900 { color: #3E2723; }
+    </style>
+</head>
+<body class="font-open">
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 w-full bg-white shadow-lg z-50 transition-all duration-300">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-coffee text-wood-600 text-2xl"></i>
+                    <h1 class="font-playfair text-2xl font-bold text-wood-800">Wooden Café</h1>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="nav-item text-wood-700 hover:text-wood-500 font-semibold transition-colors">Beranda</a>
+                    <a href="#about" class="nav-item text-wood-700 hover:text-wood-500 font-semibold transition-colors">Tentang</a>
+                    <a href="#menu" class="nav-item text-wood-700 hover:text-wood-500 font-semibold transition-colors">Menu</a>
+                    <a href="#hours" class="nav-item text-wood-700 hover:text-wood-500 font-semibold transition-colors">Jam Buka</a>
+                    <a href="#contact" class="nav-item text-wood-700 hover:text-wood-500 font-semibold transition-colors">Kontak</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden text-wood-700">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-wood-200">
+            <div class="container mx-auto px-4 py-4">
+                <a href="#home" class="block py-2 text-wood-700 hover:text-wood-500 font-semibold">Beranda</a>
+                <a href="#about" class="block py-2 text-wood-700 hover:text-wood-500 font-semibold">Tentang</a>
+                <a href="#menu" class="block py-2 text-wood-700 hover:text-wood-500 font-semibold">Menu</a>
+                <a href="#hours" class="block py-2 text-wood-700 hover:text-wood-500 font-semibold">Jam Buka</a>
+                <a href="#contact" class="block py-2 text-wood-700 hover:text-wood-500 font-semibold">Kontak</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/50"></div>
+        <div class="container mx-auto px-4 text-center relative z-10 pt-20">
+            <div class="animate-fade-in">
+                <h2 class="font-playfair text-5xl md:text-7xl text-white font-bold mb-6">
+                    Selamat Datang di Wooden Café
+                </h2>
+                <p class="text-xl md:text-2xl text-wood-100 mb-8 max-w-3xl mx-auto">
+                    Perpaduan unik antara restoran dan kebun organik seluas 2,4 hektar di jantung kota
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button class="px-8 py-4 bg-wood-600 text-white rounded-full hover:bg-wood-700 transform hover:scale-105 transition-all duration-300 shadow-xl">
+                        <i class="fas fa-calendar-alt mr-2"></i>
+                        Reservasi Sekarang
+                    </button>
+                    <button class="px-8 py-4 bg-white text-wood-800 rounded-full hover:bg-wood-50 transform hover:scale-105 transition-all duration-300 shadow-xl">
+                        <i class="fas fa-utensils mr-2"></i>
+                        Lihat Menu
+                    </button>
+                </div>
+            </div>
+            <div class="animate-float mt-16">
+                <i class="fas fa-chevron-down text-white text-3xl"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section - Fixed padding issue -->
+    <section id="about" class="pt-32 pb-20 bg-gradient-to-b from-wood-50 to-white wood-pattern">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <h3 class="font-playfair text-4xl font-bold text-wood-800">
+                        Farm to Table Excellence
+                    </h3>
+                    <div class="w-20 h-1 bg-wood-600"></div>
+                    <p class="text-wood-700 leading-relaxed">
+                        Wooden Café adalah destinasi kuliner unik yang memadukan konsep restoran dengan kebun organik. 
+                        Kami menanam sendiri bahan-bahan segar yang kami gunakan, memastikan setiap hidangan 
+                        menghadirkan cita rasa autentik dan kualitas terbaik.
+                    </p>
+                    <div class="grid grid-cols-2 gap-6 mt-8">
+                        <div class="flex items-start space-x-3">
+                            <i class="fas fa-seedling text-wood-500 text-2xl"></i>
+                            <div>
+                                <h4 class="font-bold text-wood-800">100% Organik</h4>
+                                <p class="text-sm text-wood-600">Tanpa pestisida</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <i class="fas fa-award text-wood-500 text-2xl"></i>
+                            <div>
+                                <h4 class="font-bold text-wood-800">Award Winning</h4>
+                                <p class="text-sm text-wood-600">James Beard Nominee</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <i class="fas fa-leaf text-wood-500 text-2xl"></i>
+                            <div>
+                                <h4 class="font-bold text-wood-800">Berkelanjutan</h4>
+                                <p class="text-sm text-wood-600">Ramah lingkungan</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <i class="fas fa-heart text-wood-500 text-2xl"></i>
+                            <div>
+                                <h4 class="font-bold text-wood-800">Lokal</h4>
+                                <p class="text-sm text-wood-600">Mendukung petani lokal</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="bg-wood-200 rounded-3xl h-96 relative overflow-hidden shadow-2xl">
+                        <div class="absolute inset-0 bg-gradient-to-br from-wood-400/20 to-wood-600/20"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/70 to-transparent">
+                            <p class="text-white text-lg font-semibold">
+                                "Setiap hidangan adalah cerita dari kebun kami"
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Highlights -->
+    <section id="menu" class="pt-32 pb-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h3 class="font-playfair text-4xl font-bold text-wood-800 mb-4">Menu Unggulan</h3>
+                <p class="text-wood-600 max-w-2xl mx-auto">
+                    Nikmati hidangan istimewa yang dibuat dengan bahan-bahan segar dari kebun kami
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Menu Card 1 -->
+                <div class="menu-card bg-white rounded-2xl shadow-xl overflow-hidden border border-wood-200">
+                    <div class="h-48 bg-gradient-to-br from-wood-400 to-wood-600 relative">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <i class="fas fa-coffee text-white text-6xl opacity-50"></i>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-playfair text-2xl font-bold text-wood-800 mb-2">Sarapan Spesial</h4>
+                        <p class="text-wood-600 mb-4">
+                            Mulai hari Anda dengan hidangan sarapan bergizi dari bahan organik pilihan
+                        </p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-wood-600 font-bold text-xl">Rp 45.000</span>
+                            <button class="px-4 py-2 bg-wood-100 text-wood-600 rounded-full hover:bg-wood-200 transition">
+                                Lihat Menu
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Menu Card 2 -->
+                <div class="menu-card bg-white rounded-2xl shadow-xl overflow-hidden border border-wood-200">
+                    <div class="h-48 bg-gradient-to-br from-yellow-600 to-yellow-800 relative">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <i class="fas fa-utensils text-white text-6xl opacity-50"></i>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-playfair text-2xl font-bold text-wood-800 mb-2">Lunch Sets</h4>
+                        <p class="text-wood-600 mb-4">
+                            Paket makan siang lengkap dengan kombinasi sempurna rasa dan nutrisi
+                        </p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-wood-600 font-bold text-xl">Rp 75.000</span>
+                            <button class="px-4 py-2 bg-wood-100 text-wood-600 rounded-full hover:bg-wood-200 transition">
+                                Lihat Menu
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Menu Card 3 -->
+                <div class="menu-card bg-white rounded-2xl shadow-xl overflow-hidden border border-wood-200">
+                    <div class="h-48 bg-gradient-to-br from-red-700 to-red-900 relative">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <i class="fas fa-wine-glass text-white text-6xl opacity-50"></i>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-playfair text-2xl font-bold text-wood-800 mb-2">Dinner Special</h4>
+                        <p class="text-wood-600 mb-4">
+                            Pengalaman fine dining dengan menu yang berubah sesuai musim panen
+                        </p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-wood-600 font-bold text-xl">Rp 120.000</span>
+                            <button class="px-4 py-2 bg-wood-100 text-wood-600 rounded-full hover:bg-wood-200 transition">
+                                Lihat Menu
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Special Banner -->
+            <div class="mt-16 bg-gradient-to-r from-wood-600 to-wood-700 rounded-3xl p-8 text-white relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -mr-32 -mt-32"></div>
+                <div class="relative z-10 grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h4 class="font-playfair text-3xl font-bold mb-4">The Farmers Bar</h4>
+                        <p class="mb-4 text-wood-100">
+                            Nikmati koleksi minuman craft cocktails dan mocktails yang dibuat dengan 
+                            herbs segar dari kebun kami. Buka setiap hari pukul 17:00 - 22:00
+                        </p>
+                        <button class="px-6 py-3 bg-white text-wood-600 rounded-full hover:bg-wood-50 transition font-semibold">
+                            Lihat Drink Menu
+                        </button>
+                    </div>
+                    <div class="flex items-center justify-center">
+                        <div class="pulse-dot">
+                            <i class="fas fa-cocktail text-6xl text-white/80"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Operating Hours -->
+    <section id="hours" class="pt-32 pb-20 bg-gradient-to-b from-wood-50 to-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-12">
+                    <h3 class="font-playfair text-4xl font-bold text-wood-800 mb-4">Jam Operasional</h3>
+                    <p class="text-wood-600">Reservasi sangat disarankan untuk Indoor atau Outdoor Dining</p>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-white rounded-xl shadow-lg p-6 text-center transform hover:scale-105 transition border border-wood-200">
+                        <div class="w-16 h-16 bg-wood-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-sun text-wood-600 text-2xl"></i>
+                        </div>
+                        <h4 class="font-bold text-xl text-wood-800 mb-2">Café</h4>
+                        <p class="text-wood-600">Kamis - Minggu</p>
+                        <p class="text-wood-700 font-bold mt-2">10:00 - 15:00</p>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-lg p-6 text-center transform hover:scale-105 transition border border-wood-200">
+                        <div class="w-16 h-16 bg-wood-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-moon text-wood-600 text-2xl"></i>
+                        </div>
+                        <h4 class="font-bold text-xl text-wood-800 mb-2">Dinner</h4>
+                        <p class="text-wood-600">Rabu - Sabtu</p>
+                        <p class="text-wood-700 font-bold mt-2">17:00 - 21:00</p>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-lg p-6 text-center transform hover:scale-105 transition border border-wood-200">
+                        <div class="w-16 h-16 bg-wood-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-glass-martini-alt text-wood-600 text-2xl"></i>
+                        </div>
+                        <h4 class="font-bold text-xl text-wood-800 mb-2">The Farmers Bar</h4>
+                        <p class="text-wood-600">Kamis - Sabtu</p>
+                        <p class="text-wood-700 font-bold mt-2">17:00 - 22:00</p>
+                    </div>
+                </div>
+
+                <div class="mt-12 text-center">
+                    <button class="px-8 py-4 bg-wood-600 text-white rounded-full hover:bg-wood-700 transform hover:scale-105 transition shadow-xl">
+                        <i class="fas fa-calendar-check mr-2"></i>
+                        Buat Reservasi
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="pt-32 pb-20 bg-wood-800 text-white">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h3 class="font-playfair text-4xl font-bold mb-6">Kunjungi Kami</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-4">
+                            <i class="fas fa-map-marker-alt text-wood-400 text-xl mt-1"></i>
+                            <div>
+                                <h4 class="font-bold mb-1">Lokasi</h4>
+                                <p class="text-wood-100">
+                                    Jl. Kebun Raya No. 123<br>
+                                    Bandung, Jawa Barat 40132
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4">
+                            <i class="fas fa-phone text-wood-400 text-xl mt-1"></i>
+                            <div>
+                                <h4 class="font-bold mb-1">Telepon</h4>
+                                <p class="text-wood-100">(022) 123-4567</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4">
+                            <i class="fas fa-envelope text-wood-400 text-xl mt-1"></i>
+                            <div>
+                                <h4 class="font-bold mb-1">Email</h4>
+                                <p class="text-wood-100">hello@woodencafe.co.id</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8">
+                        <h4 class="font-bold mb-4">Follow Us</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-10 h-10 bg-wood-700 rounded-full flex items-center justify-center hover:bg-wood-600 transition">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-wood-700 rounded-full flex items-center justify-center hover:bg-wood-600 transition">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-wood-700 rounded-full flex items-center justify-center hover:bg-wood-600 transition">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-wood-700 rounded-2xl p-8">
+                    <h4 class="font-playfair text-2xl font-bold mb-6">Kirim Pesan</h4>
+                    <form class="space-y-4">
+                        <input type="text" placeholder="Nama Anda" 
+                               class="w-full px-4 py-3 rounded-lg bg-wood-600 placeholder-wood-300 text-white focus:outline-none focus:ring-2 focus:ring-wood-400">
+                        <input type="email" placeholder="Email" 
+                               class="w-full px-4 py-3 rounded-lg bg-wood-600 placeholder-wood-300 text-white focus:outline-none focus:ring-2 focus:ring-wood-400">
+                        <textarea placeholder="Pesan Anda" rows="4" 
+                                  class="w-full px-4 py-3 rounded-lg bg-wood-600 placeholder-wood-300 text-white focus:outline-none focus:ring-2 focus:ring-wood-400"></textarea>
+                        <button type="submit" 
+                                class="w-full py-3 bg-white text-wood-800 rounded-lg font-bold hover:bg-wood-50 transition">
+                            Kirim Pesan
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-wood-900 py-8 text-center text-wood-200">
+        <div class="container mx-auto px-4">
+            <p>&copy; 2024 Wooden Café. All rights reserved.</p>
+            <p class="text-sm mt-2">Crafted with <i class="fas fa-heart text-red-400"></i> for food lovers</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking on a link
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-2xl');
+            } else {
+                navbar.classList.remove('shadow-2xl');
+            }
+        });
+
+        // Smooth scroll for navigation links with offset for fixed navbar
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const navbarHeight = document.getElementById('navbar').offsetHeight;
+                    const targetPosition = target.getBoundingClientRect().top + window.scrollY;
+                    const offsetPosition = targetPosition - navbarHeight - 80; // Increased offset to 80px for better clearance
+                    
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all menu cards
+        document.querySelectorAll('.menu-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'all 0.6s ease-out';
+            observer.observe(card);
+        });
+
+        // Form submission handler
+        document.querySelector('form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Terima kasih! Pesan Anda telah terkirim.');
+            e.target.reset();
+        });
+
+        // Reservation button handler
+        document.querySelectorAll('button').forEach(button => {
+            if (button.textContent.includes('Reservasi')) {
+                button.addEventListener('click', () => {
+                    alert('Fitur reservasi akan segera hadir! Silakan hubungi kami melalui telepon untuk reservasi.');
+                });
+            }
+        });
+
+        // Add parallax effect to hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero-bg');
+            if (hero && scrolled < window.innerHeight) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+    </script>
+</body>
+</html>

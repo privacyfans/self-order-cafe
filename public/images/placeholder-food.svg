@@ -1,0 +1,15 @@
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="200" height="200" fill="#f3f4f6"/>
+  <g transform="translate(100,100)">
+    <!-- Fork and Knife -->
+    <g fill="#9ca3af">
+      <!-- Fork -->
+      <path d="M-30,-30 L-30,-10 L-28,-10 L-28,-30 M-26,-30 L-26,-10 L-24,-10 L-24,-30 M-22,-30 L-22,-10 L-20,-10 L-20,-30 M-26,-10 L-26,20 L-24,20 L-24,-10"/>
+      <!-- Knife -->
+      <path d="M20,-30 L20,20 L22,20 L22,-10 L30,-30 Z"/>
+      <!-- Plate -->
+      <ellipse cx="0" cy="10" rx="35" ry="8" fill="#e5e7eb" stroke="#9ca3af" stroke-width="1"/>
+    </g>
+  </g>
+  <text x="100" y="170" text-anchor="middle" fill="#6b7280" font-family="Arial, sans-serif" font-size="14">No Image</text>
+</svg>
