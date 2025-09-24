@@ -62,8 +62,7 @@ export default function PaymentPage() {
       orderId: order.id,
       amountTendered: order.total_amount
     }));
-    showToast(`Selected order ${order.order_number} for payment`, 'info');
-  }, [showToast]);
+  }, []);
 
   useEffect(() => {
     fetchOutstandingOrders();
@@ -73,10 +72,15 @@ export default function PaymentPage() {
     if (preselectedOrderId && outstandingOrders.length > 0) {
       const order = outstandingOrders.find(o => o.id.toString() === preselectedOrderId);
       if (order) {
-        selectOrder(order);
+        setSelectedOrder(order);
+        setPaymentForm(prev => ({
+          ...prev,
+          orderId: order.id,
+          amountTendered: order.total_amount
+        }));
       }
     }
-  }, [preselectedOrderId, outstandingOrders, selectOrder]);
+  }, [preselectedOrderId, outstandingOrders]);
 
   const handlePaymentMethodChange = (method: 'CASH' | 'QRIS' | 'CARD') => {
     setPaymentForm(prev => ({

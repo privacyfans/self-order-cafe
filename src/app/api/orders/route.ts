@@ -18,9 +18,12 @@ export async function GET() {
       ORDER BY o.submitted_at DESC
     `);
 
+    // Ensure orders is an array
+    const ordersArray = Array.isArray(orders) ? orders : [];
+
     // Get items for each order
     const ordersWithItems = await Promise.all(
-      (orders as Order[]).map(async (order) => {
+      ordersArray.map(async (order: any) => {
         const [items] = await pool.execute(`
           SELECT
             oi.id,
@@ -49,8 +52,8 @@ export async function GET() {
   } catch (error) {
     console.error('Database error:', error);
     return NextResponse.json(
-      { error: 'Failed to fetch orders' },
-      { status: 500 }
+      { orders: [], error: 'Failed to fetch orders' },
+      { status: 200 }
     );
   }
 }
