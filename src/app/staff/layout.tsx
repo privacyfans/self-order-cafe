@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
+import Image from 'next/image';
 import Sidebar from '@/components/staff/Sidebar';
 import { cn, formatCurrency } from '@/lib/utils';
 
@@ -56,23 +57,16 @@ export default function StaffLayout({
 
   const fetchTodayStats = async () => {
     try {
-      const response = await fetch('/api/orders');
+      const today = new Date().toISOString().split('T')[0];
+      const response = await fetch(`/api/reports?date=${today}`);
       const data = await response.json();
-      const orders = data.orders || [];
       
-      const today = new Date().toDateString();
-      const todayOrders = orders.filter((order: any) => 
-        new Date(order.submitted_at).toDateString() === today
-      );
-      
-      const revenue = todayOrders.reduce((sum: number, order: any) => 
-        sum + (order.total_amount || 0), 0
-      );
-
-      setTodayStats({
-        orders: todayOrders.length,
-        revenue
-      });
+      if (data.daily) {
+        setTodayStats({
+          orders: data.daily.total_orders,
+          revenue: data.daily.total_revenue
+        });
+      }
     } catch (error) {
       console.error('Failed to fetch today stats:', error);
     }
@@ -147,9 +141,7 @@ export default function StaffLayout({
                 onClick={() => router.push('/staff/kitchen')}
                 className="relative p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-5 5v-5zM9 17H4l5 5v-5zM12 3v18" />
-                </svg>
+                <Image src="/notification-bell.svg" alt="Notifications" width={24} height={24} />
                 {pendingOrders > 0 && (
                   <span className="absolute -top-1 -right-1 h-5 w-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
                     {pendingOrders > 9 ? '9+' : pendingOrders}
